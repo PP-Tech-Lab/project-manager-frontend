@@ -4,9 +4,9 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/in
 import { Eye, EyeClosed, KeyRound } from 'lucide-react';
 import { Tooltip } from '@/components/shared/tooltip';
 import { Button } from '@/components/ui/button';
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
-import { Control, useController } from 'react-hook-form';
+import { Control, MultipleFieldErrors, useController } from 'react-hook-form';
 
 interface PasswordProps {
   control: Control;
@@ -25,6 +25,20 @@ export const Password = (props: PasswordProps) => {
     name: props.name,
     control: props.control
   });
+
+  const errors = useMemo(() => {
+    if (!fieldState.error) return [];
+    if (!fieldState.error.types) return [{ message: fieldState.error.message }];
+
+    const currentErrors: { message: string }[] = [];
+
+    Object.entries(fieldState.error.types as MultipleFieldErrors).forEach(([key, value]) => {
+      if (typeof value === 'string') currentErrors.push({ message: value });
+      if (Array.isArray(value)) currentErrors.push(...value.map((error: string) => ({ message: error })));
+    });
+
+    return currentErrors;
+  }, [fieldState.error]);
 
   return (
     <Field data-invalid={fieldState.invalid}>
@@ -53,7 +67,7 @@ export const Password = (props: PasswordProps) => {
           </Tooltip>
         </InputGroupAddon>
       </InputGroup>
-      {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+      {fieldState.invalid && <FieldError errors={errors}/>}
       {props.children}
     </Field>
   );

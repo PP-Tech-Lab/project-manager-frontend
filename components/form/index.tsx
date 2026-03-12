@@ -30,8 +30,10 @@ export const Form = ({ inputs, control, children, onSubmit }: FormProps) => {
   };
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={onSubmit}>
-      {inputs.map(getInput)}
+    <form onSubmit={onSubmit}>
+      <div className="flex flex-col gap-4">
+        {inputs.map(getInput)}
+      </div>
       {children}
     </form>
   );

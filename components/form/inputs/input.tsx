@@ -12,6 +12,7 @@ interface FormInputProps {
   type?: React.HTMLInputTypeAttribute;
   placeholder?: string;
   icon?: ReactNode;
+  children?: ReactNode;
 }
 
 export const Input = (props: FormInputProps) => {
@@ -32,6 +33,7 @@ export const Input = (props: FormInputProps) => {
         />
       </InputGroup>
       {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+      {props.children}
     </Field>
   );
 };
