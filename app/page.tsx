@@ -1,5 +1,9 @@
+import { ThemeButton } from '@/components/theme/theme-button';
+
 export default function Home() {
   return (
-    <div>HOLA</div>
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <ThemeButton/>
+    </div>
   );
 }
