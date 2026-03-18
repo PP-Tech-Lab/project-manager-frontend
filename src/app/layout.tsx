@@ -33,23 +33,23 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={cn('font-sans', inter.variable)} suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <StoreProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NextIntlClientProvider>
-              <TooltipProvider>
-                {children}
-                <OverlayLoader/>
-              </TooltipProvider>
-            </NextIntlClientProvider>
-          </ThemeProvider>
-        </StoreProvider>
-      </body>
+    <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <StoreProvider>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <NextIntlClientProvider>
+          <TooltipProvider>
+            {children}
+            <OverlayLoader/>
+          </TooltipProvider>
+        </NextIntlClientProvider>
+      </ThemeProvider>
+    </StoreProvider>
+    </body>
     </html>
   );
 }

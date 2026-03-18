@@ -1,5 +1,5 @@
-import esAuth from '@/messages/es/auth.json';
-import esForm from '@/messages/es/form.json';
+import esAuth from '@/i18n/messages/es/auth.json';
+import esForm from '@/i18n/messages/es/form.json';
 //import esCommon from '@/messages/es/common.json'
 
 type Messages = {

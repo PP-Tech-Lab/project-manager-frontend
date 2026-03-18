@@ -3,13 +3,11 @@
 import {
   AlertDialog as SHAlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger
+  AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 import { useTranslations } from 'next-intl';
 
