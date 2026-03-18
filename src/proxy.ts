@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export async function proxy(request: NextRequest) {
   const token = (await request.cookies).get('auth_token')?.value;
+
   const { pathname } = request.nextUrl;
 
   if (token && (pathname === '/' || pathname.startsWith('/auth'))) {
