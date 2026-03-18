@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/theme/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { NextIntlClientProvider } from 'next-intl';
 import { OverlayLoader } from '@/components/loader/overlay-loader';
+import StoreProvider from '@/app/store-provider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -33,19 +34,21 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn('font-sans', inter.variable)} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <NextIntlClientProvider>
-            <TooltipProvider>
-              {children}
-              <OverlayLoader/>
-            </TooltipProvider>
-          </NextIntlClientProvider>
-        </ThemeProvider>
+        <StoreProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <NextIntlClientProvider>
+              <TooltipProvider>
+                {children}
+                <OverlayLoader/>
+              </TooltipProvider>
+            </NextIntlClientProvider>
+          </ThemeProvider>
+        </StoreProvider>
       </body>
     </html>
   );

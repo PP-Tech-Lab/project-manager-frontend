@@ -3,8 +3,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form } from '@/components/form';
 import { Button } from '@/components/ui/button';
-import { useMemo } from 'react';
-import { User } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { LoaderCircle, User } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -12,6 +12,7 @@ import { AuthForm } from '@/app/auth/types';
 import { useTranslations } from 'next-intl';
 import { login } from '@/app/auth/actions/login';
 import { useRouter } from 'next/navigation';
+import { AlertDialog } from '@/components/shared/alert-dialog';
 
 interface LoginProps {
   onSwitchForm: (form: AuthForm) => void;
@@ -21,12 +22,14 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
   const router = useRouter();
   const tAuth = useTranslations('auth');
   const tForm = useTranslations('form');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const formSchema = z.object({
-    email: z
+    username: z
       .string()
-      .min(1, tForm('errors.required-field'))
-      .email(tForm('errors.invalid-email')),
+      .min(1, tForm('errors.required-field')),
+    //.email(tForm('errors.invalid-email')), Todo - enabled when backend is ready
     password: z
       .string()
       .min(1, tForm('errors.required-field'))
@@ -35,26 +38,29 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: ''
     }
   });
 
   const onSubmit = async (formData: any) => {
     try {
+      setLoading(true);
+
       const result = await login(formData);
 
-      if (result.success) router.push('/');
-      else throw new Error(result.message);
+      if (result.success) router.push('/home');
     } catch (error) {
       console.error(error);
-      //todo agregar alerta.
+      setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
   const inputs = useMemo(() => [
     {
-      name: 'email',
+      name: 'username',
       label: tForm('field.email'),
       placeholder: tForm('placeholder.email'),
       icon: <User/>
@@ -88,7 +94,16 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
             >
               <small>{tAuth('links.recover-password')}</small>
             </Button>
-            <Button className="mt-3" type={'submit'}>Ingresar</Button>
+            <Button
+              className="mt-3"
+              type={'submit'}
+              disabled={loading}
+            >
+              {loading
+                ? <LoaderCircle className={'animate-spin'}/>
+                : tAuth('login.send')
+              }
+            </Button>
             <Button
               variant="link"
               className="justify-center mb-3 underline mt-5"
@@ -99,6 +114,8 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
           </div>
         </Form>
       </CardContent>
+
+      <AlertDialog show={error} onClose={() => setError(false)}/>
     </Card>
   );
 };
