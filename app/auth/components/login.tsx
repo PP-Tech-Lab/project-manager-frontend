@@ -10,12 +10,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { AuthForm } from '@/app/auth/types';
 import { useTranslations } from 'next-intl';
+import { login } from '@/app/auth/actions/login';
+import { useRouter } from 'next/navigation';
 
 interface LoginProps {
   onSwitchForm: (form: AuthForm) => void;
 }
 
 export const Login = ({ onSwitchForm }: LoginProps) => {
+  const router = useRouter();
   const tAuth = useTranslations('auth');
   const tForm = useTranslations('form');
 
@@ -37,8 +40,16 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
     }
   });
 
-  const onSubmit = (data: any) => {
-    console.log('Form Data: ', data);
+  const onSubmit = async (formData: any) => {
+    try {
+      const result = await login(formData);
+
+      if (result.success) router.push('/');
+      else throw new Error(result.message);
+    } catch (error) {
+      console.error(error);
+      //todo agregar alerta.
+    }
   };
 
   const inputs = useMemo(() => [

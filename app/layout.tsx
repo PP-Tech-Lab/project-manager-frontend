@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { NextIntlClientProvider } from 'next-intl';
+import { OverlayLoader } from '@/components/loader/overlay-loader';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -41,6 +42,7 @@ export default function RootLayout({
           <NextIntlClientProvider>
             <TooltipProvider>
               {children}
+              <OverlayLoader/>
             </TooltipProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
