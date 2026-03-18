@@ -43,7 +43,7 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
     }
   });
 
-  const onSubmit = async (formData: any) => {
+  const onSubmit = async (formData: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
 
