@@ -1,0 +1,22 @@
+{
+  "field": {
+    "email": "Email",
+    "password": "Password",
+    "repeatPassword": "Repeat password"
+  },
+  "placeholder": {
+    "email": "example@domain.com",
+    "password": "********"
+  },
+  "errors": {
+    "required-field": "This field is required",
+    "invalid-email": "Enter a valid email",
+    "password": {
+      "invalid-length": "Password must be at least 8 characters long",
+      "invalid-upper-case": "Must contain at least one uppercase letter",
+      "invalid-number": "Must contain at least one number",
+      "invalid-symbol": "Must contain at least one symbol",
+      "invalid-match": "Passwords do not match"
+    }
+  }
+}

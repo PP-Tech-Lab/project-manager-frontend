@@ -1,0 +1,22 @@
+{
+  "field": {
+    "email": "Correo",
+    "password": "Contraseña",
+    "repeatPassword": "Repetir contraseña"
+  },
+  "placeholder": {
+    "email": "ejemplo@dominio.com",
+    "password": "********"
+  },
+  "errors": {
+    "required-field": "Este campo es obligatorio",
+    "invalid-email": "Ingresa un correo válido",
+    "password": {
+      "invalid-length": "La contraseña debe tener al menos 8 caracteres",
+      "invalid-upper-case": "Debe contener al menos una mayúscula",
+      "invalid-number": "Debe contener al menos un número",
+      "invalid-symbol": "Debe contener al menos un símbolo",
+      "invalid-match": "Las contraseñas no coinciden"
+    }
+  }
+}
