@@ -4,6 +4,7 @@ import { authService } from '@/lib/api/services/auth.service';
 import { LoginCredentials } from '@/lib/api/models/auth';
 import { cookies } from 'next/headers';
 import { ApiErrors } from '@/lib/api/enums/api-errors.enum';
+import { redirect } from 'next/navigation';
 
 export const loginAction = async (credentials: LoginCredentials) => {
   try {
@@ -24,4 +25,16 @@ export const loginAction = async (credentials: LoginCredentials) => {
       error: (error as ApiErrors) || ApiErrors.UNKNOWN
     };
   }
+};
+
+export const logoutAction = async () => {
+  try {
+    const cookieStore = await cookies();
+    cookieStore.delete('auth_token');
+
+  } catch (error) {
+    console.error('Error deleting cookie:', error);
+  }
+
+  redirect('/auth');
 };

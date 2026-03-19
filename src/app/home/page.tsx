@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
 import { meAction } from '@/app/home/actions/me.action';
 import { useEffect, useState } from 'react';
+import { logoutAction } from '@/app/auth/actions/login.action';
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -13,6 +14,10 @@ const Home = () => {
     const user = await meAction();
     console.log(user);
     setUser(user);
+  };
+
+  const handleLogout = async () => {
+    const response = await logoutAction();
   };
 
   useEffect(() => {
@@ -30,7 +35,7 @@ const Home = () => {
         <p className="mt-4 text-red-500">No se pudo cargar la información del usuario.</p>
       )}
 
-      <Button>{t('links.logout')}</Button>
+      <Button onClick={handleLogout}>{t('links.logout')}</Button>
     </div>
   );
 };

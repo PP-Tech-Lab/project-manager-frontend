@@ -6,7 +6,6 @@ const BASE_URL = process.env.API_URL;
 
 export const http = axios.create({
   baseURL: BASE_URL,
-  //timeout: 2000,
   headers: {
     'Content-Type': 'application/json'
   },
@@ -22,6 +21,7 @@ http.interceptors.request.use(async (config) => {
   } catch (error) {
     console.warn('Could not access cookies in axios interceptor', error);
   }
+
   return config;
 });
 

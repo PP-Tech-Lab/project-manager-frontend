@@ -26,7 +26,6 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
   const tAuth = useTranslations('auth');
   const tForm = useTranslations('form');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
 
   const formSchema = z.object({
     username: z
@@ -45,10 +44,6 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
       password: ''
     }
   });
-
-  //t('failed-login.title')
-//t('failed-login.description')
-//t('failed-login.confirm')
 
   const onSubmit = async (formData: z.infer<typeof formSchema>) => {
     setLoading(true);
@@ -124,8 +119,6 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
           </div>
         </Form>
       </CardContent>
-
-      {/*<AlertDialog show={error} onClose={() => setError(false)}/>*/}
     </Card>
   );
 };
