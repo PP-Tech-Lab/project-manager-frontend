@@ -46,8 +46,8 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
   const onSubmit = async (formData: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
-
       const result = await login(formData);
+      console.log('Result: ', result);
 
       if (result.success) router.push('/home');
     } catch (error) {
