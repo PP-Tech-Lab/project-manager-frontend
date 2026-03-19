@@ -7,6 +7,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { NextIntlClientProvider } from 'next-intl';
 import { OverlayLoader } from '@/components/loader/overlay-loader';
 import StoreProvider from '@/app/store-provider';
+import { AlertDialog } from '@/components/shared/alert';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -45,6 +46,7 @@ export default function RootLayout({
           <TooltipProvider>
             {children}
             <OverlayLoader/>
+            <AlertDialog/>
           </TooltipProvider>
         </NextIntlClientProvider>
       </ThemeProvider>
