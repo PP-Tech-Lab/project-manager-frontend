@@ -7,7 +7,8 @@ export default getRequestConfig(async () => {
     locale,
     messages: {
       auth: (await import(`@/i18n/messages/${locale}/auth.json`)).default,
-      form: (await import(`@/i18n/messages/${locale}/form.json`)).default
+      form: (await import(`@/i18n/messages/${locale}/form.json`)).default,
+      common: (await import(`@/i18n/messages/${locale}/common.json`)).default
     }
   };
 });

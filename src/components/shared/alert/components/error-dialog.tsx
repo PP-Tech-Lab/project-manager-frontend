@@ -1,24 +1,34 @@
+'use client';
+
 import {
   AlertDialog as SHAlertDialog, AlertDialogAction,
   AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
-import { AlertDialogProps } from '@/components/shared/alert/types/alert-dialog-props.interface';
+import { AlertState, hideAlert } from '@/lib/stores/alert.slice';
+import { useAppDispatch } from '@/lib/stores/hooks';
+import { useTranslations } from 'next-intl';
 
-//t('failed-login.title')
-//t('failed-login.description')
-//t('failed-login.confirm')
-export const ErrorDialog = (props: AlertDialogProps) => {
+export const ErrorDialog = (props: AlertState) => {
+  const t = useTranslations('common');
+  const dispatch = useAppDispatch();
+
+  const handleConfirm = () => {
+    dispatch(hideAlert());
+  };
+
   return (
-    <SHAlertDialog open={props.show} onOpenChange={(open) => !open && !!props.onClose && props.onClose()}>
+    <SHAlertDialog open={true}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{props.title}</AlertDialogTitle>
           <AlertDialogDescription>{props.description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction>{props.confirmText}</AlertDialogAction>
+          <AlertDialogAction onClick={handleConfirm}>
+            {props.confirmText || t('alert.ok')}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </SHAlertDialog>

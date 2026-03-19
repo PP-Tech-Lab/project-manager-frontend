@@ -1,10 +1,12 @@
 import esAuth from '@/i18n/messages/es/auth.json';
 import esForm from '@/i18n/messages/es/form.json';
+import esCommon from '@/i18n/messages/es/common.json';
 //import esCommon from '@/messages/es/common.json'
 
 type Messages = {
   auth: typeof esAuth,
   form: typeof esForm,
+  common: typeof esCommon
   // common: typeof enCommon
 }
 

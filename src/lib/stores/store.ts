@@ -1,13 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit'
-import uiReducer from './ui-slice'
+import { configureStore } from '@reduxjs/toolkit';
+import uiReducer from './ui-slice';
+import alertReducer from './alert.slice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      ui: uiReducer
+      ui: uiReducer,
+      alert: alertReducer
     }
-  })
-}
+  });
+};
 
 export type AppStore = ReturnType<typeof makeStore>
 export type RootState = ReturnType<AppStore['getState']>

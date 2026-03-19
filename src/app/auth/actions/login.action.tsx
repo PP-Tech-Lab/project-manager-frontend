@@ -5,7 +5,7 @@ import { LoginCredentials } from '@/lib/api/models/auth';
 import { cookies } from 'next/headers';
 import { ApiErrors } from '@/lib/api/enums/api-errors.enum';
 
-export const login = async (credentials: LoginCredentials) => {
+export const loginAction = async (credentials: LoginCredentials) => {
   try {
     const { token } = await authService.login(credentials);
 

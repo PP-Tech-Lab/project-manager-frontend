@@ -10,15 +10,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { AuthForm } from '@/app/auth/types';
 import { useTranslations } from 'next-intl';
-import { login } from '@/app/auth/actions/login';
+import { loginAction } from '@/app/auth/actions/login.action';
 import { useRouter } from 'next/navigation';
-import { AlertDialog } from '@/components/shared/alert-dialog';
+import { useAlertDialog } from '@/lib/hooks/useAlertDialog';
+import { ApiErrors } from '@/lib/api/enums/api-errors.enum';
 
 interface LoginProps {
   onSwitchForm: (form: AuthForm) => void;
 }
 
 export const Login = ({ onSwitchForm }: LoginProps) => {
+  const t = useTranslations('auth');
+  const alertDialog = useAlertDialog();
   const router = useRouter();
   const tAuth = useTranslations('auth');
   const tForm = useTranslations('form');
@@ -43,19 +46,26 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
     }
   });
 
-  const onSubmit = async (formData: z.infer<typeof formSchema>) => {
-    try {
-      setLoading(true);
-      const result = await login(formData);
-      console.log('Result: ', result);
+  //t('failed-login.title')
+//t('failed-login.description')
+//t('failed-login.confirm')
 
-      if (result.success) router.push('/home');
-    } catch (error) {
-      console.error(error);
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+  const onSubmit = async (formData: z.infer<typeof formSchema>) => {
+    setLoading(true);
+    const result = await loginAction(formData);
+
+    if (result.success) return router.push('/home');
+
+    const title = result.error == ApiErrors.UNAUTHORIZED
+      ? t('failed-login.title')
+      : t('failed-request.title');
+
+    const description = ApiErrors.UNAUTHORIZED
+      ? t('failed-request.description')
+      : t('failed-request.description');
+
+    alertDialog.openDialog({ title, description, type: 'error' });
+    setLoading(false);
   };
 
   const inputs = useMemo(() => [
@@ -115,7 +125,7 @@ export const Login = ({ onSwitchForm }: LoginProps) => {
         </Form>
       </CardContent>
 
-      <AlertDialog show={error} onClose={() => setError(false)}/>
+      {/*<AlertDialog show={error} onClose={() => setError(false)}/>*/}
     </Card>
   );
 };

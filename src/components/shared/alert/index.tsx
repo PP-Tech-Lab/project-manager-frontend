@@ -1,8 +1,11 @@
-import { AlertDialogProps } from '@/components/shared/alert/types/alert-dialog-props.interface';
+'use client';
+
 import { ErrorDialog } from '@/components/shared/alert/components/error-dialog';
+import { useAppSelector } from '@/lib/stores/hooks';
 
-export const AlertDialog = (props: AlertDialogProps) => {
+export const AlertDialog = () => {
+  const alertData = useAppSelector((state) => state.alert);
 
-  if (!props.show) return;
-  if (props.type === 'error') return <ErrorDialog {...props}/>;
+  if (!alertData.open) return;
+  if (alertData.type === 'error') return <ErrorDialog {...alertData}/>;
 };
